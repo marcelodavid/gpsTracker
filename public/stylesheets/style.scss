@@ -1,0 +1,9 @@
+@import 'colors';
+
+body{
+    color: map-get($red, A700);
+}
+
+a{
+    color: map-get($purple, 200);
+}
