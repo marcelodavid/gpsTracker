@@ -1,9 +1,14 @@
 @import 'colors';
 
+*{
+    margin:0px;
+    padding:0px;
+}
 body{
-    color: map-get($red, A700);
+    color: map-get($blue, A700);
 }
 
 a{
     color: map-get($purple, 200);
 }
+
