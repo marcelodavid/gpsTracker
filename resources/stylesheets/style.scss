@@ -1,0 +1,15 @@
+@import 'colors';
+
+*{
+    margin:0px;
+    padding:0px;
+}
+body{
+    padding:15px;
+    color: map-get($grey, A100);
+}
+
+a{
+    color: map-get($red, 200);
+}
+
