@@ -1,25 +1,16 @@
 const gulp = require('gulp');
+const $ = require('gulp-load-plugins')();
 const del = require('del');
-const sass = require('gulp-sass');
-const ejs = require('gulp-ejs');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
-const sourcemaps = require('gulp-sourcemaps');
-const autoprefixer = require('gulp-autoprefixer');
-const uglify = require('gulp-uglify'); // minifica el javascript para produccion
-const plumber = require('gulp-plumber'); // agrega sistemas de catch de errores
-const jasmine = require('gulp-jasmine'); // for unitary test
 const jasmineReporter = require('jasmine-console-reporter');
-const tslint = require('gulp-tslint');
-const typescript = require('gulp-typescript');
-const tsProject = typescript.createProject("tsconfig.json");
-const color = require('gulp-color');
+const tsProject = $.typescript.createProject("tsconfig.json");
 
 // manejador de errores
 let errorHandler = () =>
-    plumber(function(error) {
-        console.log('\t' + color("Error: ", 'RED') + error.messageOriginal);
-        console.log('\t' + color("StackTrace: ", 'WHITE') + error.relativePath + color(" [" + error.line + "/" + error.column + "]", 'GREEN'));
+    $.plumber(function(error) {
+        console.log('\t' + $.color("Error: ", 'RED') + error.messageOriginal);
+        console.log('\t' + $.color("StackTrace: ", 'WHITE') + error.relativePath + $.color(" [" + error.line + "/" + error.column + "]", 'GREEN'));
         this.emit('end');
     });
 
@@ -30,24 +21,24 @@ gulp.task('clear', (cb) =>
 // Lint a los archivos typescripts
 gulp.task('tslint', () =>
     gulp.src('angular-src/**/*.ts')
-    .pipe(tslint({
+    .pipe($.tslint({
         formatter: 'prose'
     }))
-    .pipe(tslint.report({
+    .pipe($.tslint.report({
         emitError: false
     })));
 
 /*****************************************
  * Compilamos los archivos ts, scss y ejs *
  * ****************************************/
-let tsreporter = typescript.reporter.nullReporter();
+let tsreporter = $.typescript.reporter.nullReporter();
 gulp.task('ts', ['tslint'], () =>
     gulp.src('angular-src/**/*.ts')
     .pipe(errorHandler())
-    .pipe(sourcemaps.init())
+    .pipe($.sourcemaps.init())
     .pipe(tsProject( /*tsreporter*/ ))
-    .pipe(plumber.stop())
-    .pipe(sourcemaps.write())
+    .pipe($.plumber.stop())
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({
         stream: true
@@ -56,14 +47,14 @@ gulp.task('ts', ['tslint'], () =>
 gulp.task('sass', () =>
     gulp.src(['./resources/**/*.scss', 'angular-src/**/*.scss'])
     .pipe(errorHandler())
-    .pipe(sourcemaps.init())
-    .pipe(sass()) // compilar sass
-    .pipe(plumber.stop())
-    .pipe(autoprefixer({
+    .pipe($.sourcemaps.init())
+    .pipe($.sass()) // compilar sass
+    .pipe($.plumber.stop())
+    .pipe($.autoprefixer({
         browsers: ['last 2 versions'],
         cascade: false
     }))
-    .pipe(sourcemaps.write())
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({
         stream: true
@@ -72,12 +63,12 @@ gulp.task('sass', () =>
 gulp.task('ejs', () =>
     gulp.src('views/index.ejs')
     .pipe(errorHandler())
-    .pipe(ejs({
+    .pipe($.ejs({
         title: "Express"
     }, {}, {
         ext: '.html'
     }))
-    .pipe(plumber.stop())
+    .pipe($.plumber.stop())
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({
         stream: true
@@ -117,7 +108,7 @@ let reporter = new jasmineReporter({
 
 gulp.task('test', () =>
     gulp.src('spec/*/*[sS]pec.js')
-    .pipe(jasmine({
+    .pipe($.jasmine({
         verbose: false,
         errorOnFail: false,
         reporter: reporter
@@ -153,11 +144,10 @@ gulp.task('browserSync', ['compile', 'libs', 'resources'], () => {
  *******************************************/
 gulp.task('sass:prod', () =>
     gulp.src(['resources/**/*.scss', 'angular-src/**/*.scss'])
-    .pipe(plumber())
-    .pipe(sass({
+    .pipe($.sass({
         outputStyle: 'compressed'
     }))
-    .pipe(autoprefixer({
+    .pipe($.autoprefixer({
         browsers: ['last 2 versions'],
         cascade: false
     }))
@@ -165,8 +155,7 @@ gulp.task('sass:prod', () =>
 
 gulp.task('js:prod', () =>
     gulp.src('./**/*.js')
-    .pipe(plumber())
-    .pipe(uglify({
+    .pipe($.uglify({
         compress: true
     }))
     .pipe(gulp.dist('public')));
