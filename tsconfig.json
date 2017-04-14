@@ -1,9 +1,7 @@
 {
     "compilerOptions": {
         "declaration": true,
-        "outDir": ".tmp",
         "target": "es6",
-        "module": "system",
         "moduleResolution": "node",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
