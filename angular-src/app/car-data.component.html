@@ -1,0 +1,16 @@
+<ul>
+    <h1>Datos de Vehículo</h1>
+    <li>modelo: {{ car.model }}</li>
+    <li>año: {{ car.year }}</li>
+    <li>color: {{ car.color }}</li>
+    <li>
+        <ul>
+            <h2>Propietario</h2>
+            <li>Nombre: {{ car.owner.name }}</li>
+            <li>E-mail: {{ car.owner.mail }}</li>
+            <li>Tel: {{ car.owner.tel }}</li>
+            <li>Direccion: {{ car.owner.address }}</li>
+            <li>Cédula de identidad: {{car.owner['identification number']}}</li>
+        </ul>
+    </li>
+</ul>

@@ -8,13 +8,10 @@
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "removeComments": false,
+        "removeComments": true,
         "noImplicitAny": true,
         "pretty": true
     },
     "lib": ["es5", "dom", "es6", "dom.iterable", "scripthost"],
-    "exclude": [
-        "node_modules",
-        "./**/*spec.ts"
-    ]
+    "exclude": "node_modules"
 }
