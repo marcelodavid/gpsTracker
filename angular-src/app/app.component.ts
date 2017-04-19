@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css']
 })
-export class AppComponent {
-    title = 'Gps tracker';
-}
+export class AppComponent { }

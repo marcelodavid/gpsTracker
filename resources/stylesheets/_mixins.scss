@@ -1,0 +1,27 @@
+@mixin flexbox($width, $height) {
+    display: flex;
+    width: $width;
+    height: $height;
+    flex-wrap:wrap;
+}
+
+$break-small: 400px;
+$break-large: 1024px;
+
+@mixin respond-to($media) {
+    @if $media == handhelds {
+        @media screen and (max-width: $break-small){
+            @content;
+        }
+    }
+    @else if $media == medium-screens {
+        @media screen and (min-width: $break-small + 1){
+            @content;
+        }
+    }
+    @else if $media == wide-screens {
+        @media screen and (min-width: $break-large){
+            @content;
+        }
+    }
+}

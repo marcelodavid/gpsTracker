@@ -1,5 +1,6 @@
 export class Authorized {
     name: string;
-    identificationNumber: string;
+    tel: string;
+    identificationNumber?: string;
 }
 

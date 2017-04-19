@@ -1,11 +1,9 @@
-import { Owner } from './owner.model';
-import { Authorized } from './authorized.model';
 export class CarData {
-    model: string;
-    year: number;
-    color: string;
-    vehicleNumber: string;
-    id: string;
-    owner: Owner;
-    authorized: Authorized[];
+    constructor(
+        public model: string,
+        public year: number,
+        public color: string,
+        public vehicleNumber: string,
+        public municipios: string[]
+    ) { }
 }

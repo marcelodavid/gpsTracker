@@ -11,8 +11,9 @@ const reporters = require('reporters');
 
 gulp.task('default', ['browserSync']);
 
+const DEST = '.tmp';
 gulp.task('clear', (cb) =>
-    del([".tmp"], cb)); // limpiamos antes y despues del build
+    del([DEST], cb)); // limpiamos antes y despues del build
 
 gulp.task('tslint', () =>
     gulp.src('angular-src/**/*.ts')
@@ -31,11 +32,12 @@ gulp.task('compile', ['ts', 'sass', 'ejs']);
 gulp.task('ts', ['tslint'], () =>
     gulp.src(['angular-src/**/*.ts', '!angular-src/app/**/*[sS]pec.ts'])
     .pipe($.plumber())
+    .pipe($.changed(DEST))
     .pipe($.sourcemaps.init())
     .pipe(tsProject())
     .pipe($.plumber.stop())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp'))
+    .pipe(gulp.dest(DEST))
     .pipe(reload({
         stream: true
     })));
@@ -43,6 +45,7 @@ gulp.task('ts', ['tslint'], () =>
 gulp.task('sass', () =>
     gulp.src(['./resources/**/*.scss', 'angular-src/**/*.scss'])
     .pipe($.plumber(reporters('gulp-sass')))
+    .pipe($.changed(DEST))
     .pipe($.sourcemaps.init())
     .pipe($.sass()) // compilar sass
     .pipe($.plumber.stop())
@@ -51,9 +54,10 @@ gulp.task('sass', () =>
         cascade: false
     }))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp'))
+    .pipe(gulp.dest(DEST))
     .pipe(reload({
-        stream: true
+        stream: true,
+        once: true
     }))); // envia los cambios al navegador
 
 gulp.task('ejs', () =>
@@ -65,7 +69,7 @@ gulp.task('ejs', () =>
         ext: '.html'
     }))
     .pipe($.plumber.stop())
-    .pipe(gulp.dest('.tmp'))
+    .pipe(gulp.dest(DEST))
     .pipe(reload({
         stream: true
     })));
@@ -74,7 +78,7 @@ gulp.task('ejs', () =>
 
 gulp.task('angular-templates', () =>
     gulp.src('angular-src/**/*.html')
-    .pipe(gulp.dest('.tmp'))
+    .pipe(gulp.dest(DEST))
     .pipe(reload({
         stream: true
     })));
@@ -95,7 +99,7 @@ gulp.task('libs', () =>
 
 gulp.task('resources', () =>
     gulp.src(['resources/**', '!resources/**/*.{scss, ts}'])
-    .pipe(gulp.dest('.tmp')));
+    .pipe(gulp.dest(DEST)));
 
 /* Etapa de desarrollo, depuracion y debug con browserSync */
 
@@ -112,8 +116,7 @@ gulp.task('browserSync', ['compile', 'libs', 'resources', 'angular-templates'], 
 gulp.task('watch', () => {
     gulp.watch(['angular-src/**/*.ts', '!**/*[sS]pec.ts'], ['ts']);
     gulp.watch('angular-src/**/*.html', ['angular-templates'])
-    gulp.watch('angular-src/**/*.scss', ['sass', 'angular-templates']);
-    gulp.watch('resources/**/*.scss', ['sass']);
+    gulp.watch(['angular-src/**/*.scss', 'resources/**/*.scss'], ['sass']);
     gulp.watch('./views/*.ejs', ['ejs']);
 });
 

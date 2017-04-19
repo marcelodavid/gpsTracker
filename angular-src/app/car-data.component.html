@@ -1,16 +1,70 @@
-<ul>
-    <h1>Datos de Vehículo</h1>
-    <li>modelo: {{ car.model }}</li>
-    <li>año: {{ car.year }}</li>
-    <li>color: {{ car.color }}</li>
-    <li>
-        <ul>
-            <h2>Propietario</h2>
-            <li>Nombre: {{ car.owner.name }}</li>
-            <li>E-mail: {{ car.owner.mail }}</li>
-            <li>Tel: {{ car.owner.tel }}</li>
-            <li>Direccion: {{ car.owner.address }}</li>
-            <li>Cédula de identidad: {{car.owner['identification number']}}</li>
-        </ul>
-    </li>
-</ul>
+<div class="form-register">
+    <form *ngIf="car" (ngSubmit)="submit(carForm)" #carForm="ngForm">
+        <h2>Registro del vehículo</h2>
+        <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" name="modelo" required #modelo="ngModel" [(ngModel)]="car.model">
+            <div [hidden]="modelo.valid || modelo.pristine" class="alert">
+                Este campo es requerido
+            </div>
+            <div class="input-logs">
+                <i class="material-icons" [class.priority]="modelo.pristine">priority_high</i>
+                <i class="material-icons" [class.success]="modelo.valid">done</i>
+                <i class="material-icons" [class.error]="modelo.invalid && modelo.dirty">clear</i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="year">Año</label>
+            <input type="text" id="year" name="year" required #year="ngModel" [(ngModel)]="car.year">
+            <div [hidden]="year.valid || year.pristine" class="alert">
+                Este campo es requerido
+            </div>
+            <div class="input-logs">
+                <i class="material-icons" [class.priority]="year.pristine">priority_high</i>
+                <i class="material-icons" [class.success]="year.valid">done</i>
+                <i class="material-icons" [class.error]="year.invalid && year.dirty">clear</i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" name="color" required #color="ngModel" [(ngModel)]="car.color">
+            <div [hidden]="color.valid || color.pristine" class="alert">
+                Este campo es requerido
+            </div>
+            <div class="input-logs">
+                <i class="material-icons" [class.priority]="color.pristine">priority_high</i>
+                <i class="material-icons" [class.success]="color.valid">done</i>
+                <i class="material-icons" [class.error]="color.invalid && color.dirty">clear</i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="matricula">Matricula</label>
+            <input type="text" id="matricula" name="matricula" required #matricula="ngModel" [(ngModel)]="car.vehicleNumber">
+            <div [hidden]="matricula.valid || matricula.pristine" class="alert">
+                Este campo es requerido
+            </div>
+            <div class="input-logs">
+                <i class="material-icons" [class.priority]="matricula.pristine">priority_high</i>
+                <i class="material-icons" [class.success]="matricula.valid">done</i>
+                <i class="material-icons" [class.error]="matricula.invalid && matricula.dirty">clear</i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="municipio">Municipio</label>
+            <select id="municipio" name="municipio">
+                <option *ngFor="let municipio of car.municipios" [value]="municipio.nombre"> {{municipio.nombre}}</option>
+            </select>
+            <div class="down-arrow">
+                <i class="material-icons">arrow_drop_down</i>
+            </div>
+        </div>
+        <button type="button" class="error">
+            <i class="material-icons">close</i> <span>Cancelar</span>
+        </button>
+        <button type="submit" [disabled]="!carForm.form.valid">
+            <!-- Un icono de guardar -->
+            <i class="material-icons">save</i> <span>Guardar</span>
+        </button>
+        <div class="clear"></div>
+    </form>
+</div>

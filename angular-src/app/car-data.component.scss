@@ -1,7 +1,127 @@
-ul{
-    list-style: none;
-    padding:20px;
-    background-color:#333;
-    color:#bdbdbd;
-    margin-top:10px;
+@import '../../resources/stylesheets/colors';
+@import '../../resources/stylesheets/mixins';
+
+$phone: handhelds;
+$tablet: medium-screens;
+$wide: wide-screens;
+
+.form-register{
+    padding: 1.5em;
+    border-radius:.2em;
+    @include respond-to($tablet){
+        width: 450px;
+    }
+    h2{
+        color:map-get($grey, 600);
+        font-size:1.1em;
+    }
+
+    form{
+        button{
+            display:block;
+            margin-top:.5em;
+            margin-bottom:.5em;
+            float:right;
+            margin-right:3em;
+            padding:.5em;
+            outline:none;
+            border:none;
+            background-color:#fff;
+            cursor:pointer;
+
+            i{
+                color:map-get($grey, 400);
+                margin-right:.3em;
+                vertical-align:middle;
+            }
+            span{
+                display:inline-block;
+                color:#333;
+                vertical-align:middle;
+            }
+
+            &:hover{
+                i, span{
+                    color:map-get($green, 400);
+                }
+            }
+            &:hover.error{
+                i, span{
+                    color: map-get($red, 500);
+                }
+            }
+        }
+    }
 }
+.form-group{
+    position:relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius:.1em;
+    border:solid 1px #bdbdbd;
+    @include respond-to($tablet){
+        width: 460px;
+    }
+
+    label{
+        margin-right:10px;
+        width:5.5em;
+        color:map-get($grey, 600);
+        display:block;
+        width:calc(100% - .8em);
+        padding-left:.8em;
+        padding-top:.2em;
+    }
+    input, select{
+        outline:none;
+        color:map-get($grey, 700);
+        margin-top:.1em;
+        padding: .2em 1em .3em 1em;
+        background-color:transparent;
+        display:block;
+        width: calc(100% - 2em);
+        border:none;
+    }
+    select{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 100%;
+    }
+    .alert{
+        padding:.2em .2em .2em .9em;
+        color:map-get($red, 600);
+        background-color:map-get($red, 50);
+        font-size: .8em;
+    }
+    .input-logs, .down-arrow{
+        position:absolute;
+        display:inline-block;
+        right:.6em;
+        top:.3em;
+
+        i{
+            font-size:.95em;
+            color: map-get($grey, 400);
+            transition: all .4s;
+
+            &.priority{
+                color: map-get($orange, A200);
+            }
+            &.error{
+                color: map-get($red, 400);
+            }
+            &.success{
+                color: map-get($green, 500);
+            }
+        }
+    }
+    .down-arrow{
+        right:.35em;
+        top:1.2em;
+        z-index:-1;
+        i{
+            font-size:1.4em;
+        }
+    }
+}
+
