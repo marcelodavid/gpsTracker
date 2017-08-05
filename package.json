@@ -11,7 +11,7 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "build": "gulp build",
-        "start": "concurrently \"node ./bin/www\" \"gulp\" \"jest --watch --noStackTrace --notify\"",
+        "start": "concurrently \"node ./bin/www\" \"gulp\" \"jest --watch --noStackTrace\"",
         "postinstall": "typings install"
     },
     "repository": {
