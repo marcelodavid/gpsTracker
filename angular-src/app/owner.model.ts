@@ -1,8 +1,9 @@
 export class Owner {
-    name: string;
+    user: string;
+    password: string;
     mail: string;
     tel: string;
-    address: string;
-    identificationNumber: string;
+    address?: string;
+    identificationNumber?: string;
 }
 
